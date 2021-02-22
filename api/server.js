@@ -3,10 +3,13 @@ const helmet = require('helmet')
 const cors = require('cors')
 const server = express()
 
-const MongoClient = require('mongodb').MongoClient
-const flash = require('connect-flash')
+const mongoose = require('mongoose');
+const mongoDB = process.env.MONGODB_URI;
+mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-// const authRouter = require('./auth/auth-router')
+const athleteRouter = require('./athlete-router')
 
 server.use(express.json())
 server.use(helmet())
@@ -16,6 +19,6 @@ server.get("/", (req, res) => {
     res.json({api:"up"})
 })
 
-// server.use('/api/auth', authRouter)
+server.use('/api/athlete', athleteRouter)
 
 module.exports = server

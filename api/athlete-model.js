@@ -2,64 +2,26 @@ var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
 
-var SomeModelSchema = new Schema({
-    first_name: {type: String, required: true, maxLength: 100},
-    last_name: {type: String, required: true, maxLength: 100},
+var AthleteProfileSchema = new Schema({
+    first_name: {type: String, required: [true, "First name required"], trim: true, maxLength: 100},
+    last_name: {type: String, required: [true, "Last name required"], trim: true, maxLength: 100},
     date_of_birth: {type: Date},
     location: {type: String},
     team: {type: String},
     gender: {type: String},
-    sports: {type: String, enum: [
-        "Golf",
-        "Tennis",
-        "Cricket",
-        "Basketball",
-        "Baseball",
-        "American Football",
-        "Aquatics",
-        "Archery",
-        "Automobile Racing",
-        "Badminton",
-        "Beach Volleyball",
-        "Bobsleigh",
-        "Body Building",
-        "Boxing",
-        "Cross Country Running",
-        "Cross Country Skiing",
-        "Curling",
-        "Cycling",
-        "Darts",
-        "Decathlon",
-        "Down Hill Skiing",
-        "Equestrianism",
-        "eSports",
-        "Fencing",
-        "Field Hockey",
-        "Figure Skating",
-        "Gymnastics",
-        "Ice Hockey",
-        "Martial Arts",
-        "Mixed Martial Arts",
-        "Modern Pentathlon",
-        "Motorcycle Racing",
-        "Netball",
-        "Polo",
-        "Racquetball",
-        "Rowing",
-        "Rugby",
-        "Sailing",
-        "Softball",
-        "Shooting",
-        "Skateboarding",
-        "Skeet Shooting",
-        "Skeleton",
-        "Snow Boarding",
-        "Soccer (Football)",
-        "Squash",
-        "Surfing",
-        "Swimming",
-        "Track and Field"
-    ]}
+    sports: [{type: String}]
 });
 
-module.exports = mongoose.model('SomeModel', SomeModelSchema );
+AthleteProfileSchema
+    .virtual('name')
+    .get(function () {
+        return this.first_name + " " + this.last_name;
+    });
+
+AthleteProfileSchema
+    .virtual('url')
+    .get(function () {
+        return '/athleteprofile/' + this._id;
+    });
+
+module.exports = mongoose.model('AthleteProfile', AthleteProfileSchema );
