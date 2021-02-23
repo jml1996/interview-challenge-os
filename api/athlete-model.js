@@ -9,7 +9,10 @@ var AthleteProfileSchema = new Schema({
     location: {type: String},
     team: {type: String},
     gender: {type: String},
-    sports: [{type: String}]
+    sports: [{type: String}],
+    about: {type: String},
+    interests: {type: String},
+    profile_image: {type: String}
 });
 
 AthleteProfileSchema
