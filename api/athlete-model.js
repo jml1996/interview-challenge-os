@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 var AthleteProfileSchema = new Schema({
     first_name: {type: String, required: [true, "First name required"], trim: true, maxLength: 100},
     last_name: {type: String, required: [true, "Last name required"], trim: true, maxLength: 100},
-    date_of_birth: {type: Date},
+    date_of_birth: {type: String},
     location: {type: String},
     team: {type: String},
     gender: {type: String},
